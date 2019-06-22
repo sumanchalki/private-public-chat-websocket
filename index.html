@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <script type="text/javascript" src="./lib.js"></script>
+    <script type="text/javascript" src="./client.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      h1, h2, h3, h4 {
+        margin: 0;
+      }
+      #private-chat, #public-chat, #user-list {
+        width: 400px;
+        height: 280px;
+        border:1px solid #000000;
+        float: left;
+        margin: 20px 50px 10px 30px;
+        background-color: #f7f7e6;
+        overflow: auto;
+        scroll-behavior: smooth;
+      }
+      .content .chat-label {
+        margin: 20px 50px 0 30px;
+        float: left;
+        width: 400px;
+      }
+      .content::after {
+        content: "";
+        clear: both;
+        display: block;
+      }
+      .chatbox>div {
+        float: left;
+      }
+      .chatbox, .namebox {
+        margin: 20px 0 20px 30px;
+      }
+      #private-text, #public-text, #name-text {
+        width: 400px;
+        margin: 10px 80px 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="chat-label"><h2>Private Chat</h2></div>
+      <div class="chat-label"><h2>Public Chat</h2></div>
+      <div class="chat-label"><h2>Online Users</h2></div>
+    </div>
+    <div class="content">
+      <div id="private-chat"></div>
+      <div id="public-chat"></div>
+      <div id="user-list"></div>
+    </div>
+    <div class="namebox content">
+      <h4>Your Name</h4>
+      <input type="text" id="name-text" disabled="disabled" />
+    </div>
+    <div class="chatbox content">
+      <div>
+        <h4>Private Message</h4>
+        <input type="text" id="private-text" disabled="disabled" />
+      </div>
+      <div>
+        <h4>Public Message</h4>
+        <input type="text" id="public-text" disabled="disabled" />
+      </div>
+    </div>
+  </body>
+</html>
