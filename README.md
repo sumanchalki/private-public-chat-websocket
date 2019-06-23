@@ -12,7 +12,7 @@ How to run it?
 <ul>
 <li>Open a terminal and navigate to the directory.</li>
 <li>npm install</li>
-<li>npm server</li>
+<li>node server</li>
 <li>Open the index.html file in different browser windows.</li>
 <li>Start chatting.</li>
 </ul>

@@ -1,31 +1,42 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
   // Loop through all the input boxes and add enter key press event listener.
   // After the message is entered, make the textbox blank again.
-  let input_nodes = document.querySelectorAll('input[type="text"]');
-  if (input_nodes.length) {
-    input_nodes.forEach(function(el_input) {
-      el_input.addEventListener('keypress', function(e) {
+  let inputNodes = document.querySelectorAll('input[type="text"]');
+  if (inputNodes.length) {
+    inputNodes.forEach(function(elInput) {
+      elInput.addEventListener('keypress', function(e) {
         // Enter key press.
         if (e.keyCode == 13) {
-          let msg = el_input.value;
-          switch(el_input.getAttribute('id')) {
+          let msg = elInput.value;
+          switch(elInput.getAttribute('id')) {
             case 'name-text':
               sendMessage('username', msg);
-              el_input.value = "";
+              elInput.value = '';
               break;
             case 'private-text':
               sendMessage('private_msg', msg);
-              el_input.value = "";
+              elInput.value = '';
               break;
             case 'public-text':
               sendMessage('public_msg', msg);
-              el_input.value = "";
+              elInput.value = '';
               break;
           }
         }
       });
     });
   }
+
+  document.body.addEventListener('click', function (e) {
+    if (e.target &&
+      e.target.tagName === 'A' &&
+      e.target.closest('#user-list') !== null) {
+
+      e.preventDefault();
+      sendMessage('connect_private_chat', e.target.getAttribute('data-id'));
+      return false;
+    }
+  });
 });
 
 connect();

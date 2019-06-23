@@ -8,9 +8,24 @@
     <style>
       * {
         box-sizing: border-box;
+        color: #2f3235;
       }
       h1, h2, h3, h4 {
         margin: 0;
+      }
+      h1, h2, h3 {
+        color: #4a5156;
+      }
+      h4 {
+        color: #2f3235;
+      }
+      a {
+        color: #0082e5;
+        text-decoration: none;
+      }
+      .error {
+        color: #ff0000;
+        font-weight: bold;
       }
       #private-chat, #public-chat, #user-list {
         width: 400px;
@@ -21,6 +36,16 @@
         background-color: #f7f7e6;
         overflow: auto;
         scroll-behavior: smooth;
+        padding: 12px;
+      }
+      #private-chat.disabled {
+        background-color: #EBEBE4;
+      }
+      #private-chat .header {
+        font-weight: bold;
+        font-size: 1.1em;
+        text-align: center;
+        color: #02528c;
       }
       .content .chat-label {
         margin: 20px 50px 0 30px;
@@ -51,7 +76,7 @@
       <div class="chat-label"><h2>Online Users</h2></div>
     </div>
     <div class="content">
-      <div id="private-chat"></div>
+      <div id="private-chat" class="disabled"></div>
       <div id="public-chat"></div>
       <div id="user-list"></div>
     </div>
