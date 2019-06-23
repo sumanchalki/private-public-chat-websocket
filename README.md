@@ -1,5 +1,5 @@
 This project is created using WebSocket. At the server, node.js and ws module are used.
-At the client, browser is used with the WebSocket api. That is maintained using Vanilla JS.
+At the client, WebSocket web api is used (browser based). That is maintained using Vanilla JS.
 
 How to clone?
 <ul>

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Loop through all the input boxes and add enter key press event listener.
-  // After the message is entered, make the textbox blank again.
+  // After the message is entered, make the textbox blank again except username.
   let inputNodes = document.querySelectorAll('input[type="text"]');
   if (inputNodes.length) {
     inputNodes.forEach(function(elInput) {
@@ -9,16 +9,17 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.keyCode == 13) {
           let msg = elInput.value;
           switch(elInput.getAttribute('id')) {
-            case 'name-text':
-              sendMessage('username', msg);
-              elInput.value = '';
-              break;
-            case 'private-text':
-              sendMessage('private_msg', msg);
-              elInput.value = '';
-              break;
             case 'public-text':
               sendMessage('public_msg', msg);
+              elInput.value = '';
+              break;
+
+            case 'name-text':
+              sendMessage('username', msg);
+              break;
+
+            case 'private-text':
+              sendMessage('private_msg', msg);
               elInput.value = '';
               break;
           }
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // After clicking on any user, start private chat with him/her.
   document.body.addEventListener('click', function (e) {
     if (e.target &&
       e.target.tagName === 'A' &&
