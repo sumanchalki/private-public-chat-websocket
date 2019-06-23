@@ -13,6 +13,7 @@ How to run it?
 <li>Open a terminal and navigate to the directory.</li>
 <li>npm install</li>
 <li>node server</li>
-<li>Open the index.html file in different browser windows.</li>
+<li>Open http://localhost:3000/ in different browser windows.</li>
+<li>Alternatively open the index.html file directly in browser.</li>
 <li>Start chatting.</li>
 </ul>
