@@ -29,6 +29,14 @@ wss.on('connection', ws => {
       toClient = findClientById(messageParsed.withId);
       delete messageParsed.withId;
 
+      if (typeof toClient === 'undefined' ||
+        toClient.readyState !== WebSocket.OPEN ||
+        typeof fromClient === 'undefined' ||
+        fromClient.readyState !== WebSocket.OPEN
+      ) {
+        return;
+      }
+
       // Send private chat message to toClient.
       Object.assign(messageParsed, {with: {id: fromClient.id, username: fromClient.username, self: false}});
       toClient.send(JSON.stringify(messageParsed));
