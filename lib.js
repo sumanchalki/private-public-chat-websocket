@@ -3,8 +3,12 @@ let thisClientId;
 let chattingWith;
 
 function connect() {
-  chatSocket = new WebSocket("ws://127.0.0.1:2000");
-
+  if (!window.location.hostname) {
+    chatSocket = new WebSocket("ws://127.0.0.1:8080");
+  }
+  else {
+    chatSocket = new WebSocket(`ws://${window.location.hostname}:8080`);
+  }
   chatSocket.onopen = event => {
     // On chatsocket open, loop through all the input textbox
     // and make them enabled except for private chat.

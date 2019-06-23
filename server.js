@@ -1,7 +1,30 @@
+const http = require("http");
+const fs = require('fs');
+const path = require('path');
 const WebSocket = require('ws');
 const uuid = require('uuid');
-const wss = new WebSocket.Server({port: 2000});
+const wss = new WebSocket.Server({port: 8080});
 const currentPrivateChat = [];
+
+// Create a static server to serve client files.
+http.createServer(function(req, res) {
+  if (req.url === '/') {
+    fs.readFile('./index.html', 'UTF-8', (err, html) => {
+      res.writeHead(200, {"Content-Type": "text/html"});
+      res.end(html);
+    });
+  }
+  else if (req.url.match(/.css$/)) {
+    const cssStream = fs.createReadStream(path.join(__dirname, req.url), 'UTF-8');
+    res.writeHead(200, {"Content-Type": "text/css"});
+    cssStream.pipe(res);
+  }
+  else if (req.url.match(/.js$/)) {
+    const jsStream = fs.createReadStream(path.join(__dirname, req.url), 'UTF-8');
+    res.writeHead(200, {"Content-Type": "application/javascript"});
+    jsStream.pipe(res);
+  }
+}).listen(80);
 
 // TODO: send to client only if there is any change.
 setInterval(updateOnlineUsers, 3000);
