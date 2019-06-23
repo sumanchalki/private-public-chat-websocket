@@ -3,11 +3,11 @@ const fs = require('fs');
 const path = require('path');
 const WebSocket = require('ws');
 const uuid = require('uuid');
-const wss = new WebSocket.Server({port: 8080});
 const currentPrivateChat = [];
+const port = process.env.PORT || 3000;
 
 // Create a static server to serve client files.
-http.createServer(function(req, res) {
+const server = http.createServer(function(req, res) {
   if (req.url === '/') {
     fs.readFile('./index.html', 'UTF-8', (err, html) => {
       res.writeHead(200, {"Content-Type": "text/html"});
@@ -24,7 +24,9 @@ http.createServer(function(req, res) {
     res.writeHead(200, {"Content-Type": "application/javascript"});
     jsStream.pipe(res);
   }
-}).listen(80);
+}).listen(port);
+
+const wss = new WebSocket.Server({server});
 
 // TODO: send to client only if there is any change.
 setInterval(updateOnlineUsers, 3000);

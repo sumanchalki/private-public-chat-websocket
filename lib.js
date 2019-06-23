@@ -4,10 +4,10 @@ let chattingWith;
 
 function connect() {
   if (!window.location.hostname) {
-    chatSocket = new WebSocket("ws://127.0.0.1:8080");
+    chatSocket = new WebSocket("ws://127.0.0.1:3000");
   }
   else {
-    chatSocket = new WebSocket(`ws://${window.location.hostname}:8080`);
+    chatSocket = new WebSocket(location.origin.replace(/^http/, 'ws'));
   }
   chatSocket.onopen = event => {
     // On chatsocket open, loop through all the input textbox
