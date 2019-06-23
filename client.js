@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // After the message is entered, make the textbox blank again except username.
   let inputNodes = document.querySelectorAll('input[type="text"]');
   if (inputNodes.length) {
-    inputNodes.forEach(function(elInput) {
-      elInput.addEventListener('keypress', function(e) {
+    inputNodes.forEach(elInput => {
+      elInput.addEventListener('keypress', e => {
         // Enter key press.
         if (e.keyCode == 13) {
           let msg = elInput.value;
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // After clicking on any user, start private chat with him/her.
-  document.body.addEventListener('click', function (e) {
+  document.body.addEventListener('click', e => {
     if (e.target &&
       e.target.tagName === 'A' &&
       e.target.closest('#user-list') !== null) {

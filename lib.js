@@ -5,22 +5,22 @@ let chattingWith;
 function connect() {
   chatSocket = new WebSocket("ws://127.0.0.1:2000");
 
-  chatSocket.onopen = function (event) {
+  chatSocket.onopen = event => {
     // On chatsocket open, loop through all the input textbox
     // and make them enabled except for private chat.
     // Private chat will be enabled whenever someone click on you and vice-versa.
-    let input_nodes = document.querySelectorAll('input[type="text"]');
-    if (input_nodes.length) {
-      input_nodes.forEach(function(el_input) {
-        if (el_input.getAttribute('id') !== 'private-text') {
-          el_input.removeAttribute("disabled");
+    let inputNodes = document.querySelectorAll('input[type="text"]');
+    if (inputNodes.length) {
+      inputNodes.forEach(elInput => {
+        if (elInput.getAttribute('id') !== 'private-text') {
+          elInput.removeAttribute("disabled");
         }
       });
     }
   };
 
   // On receive message, render these on screen.
-  chatSocket.onmessage = function(event) {
+  chatSocket.onmessage = event => {
     let msg = JSON.parse(event.data);
     writeMessage(msg);
   };
@@ -58,8 +58,8 @@ function writeMessage(msg) {
 
     case "public_msg":
       containerToWrite = document.getElementById("public-chat");
-      if (msg.username !== null) {
-        text = `<b>${msg.text} - ${msg.username}</b> sent at ${timeStr}<br />`;
+      if (msg.from !== null) {
+        text = `<b>${msg.from.username} - ${msg.text}</b> sent at ${timeStr}<br />`;
       }
       else {
         text = `<b>${msg.text}</b> at ${timeStr}<br />`;

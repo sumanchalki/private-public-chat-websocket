@@ -6,7 +6,7 @@ const currentPrivateChat = [];
 // TODO: send to client only if there is any change.
 setInterval(updateOnlineUsers, 3000);
 
-wss.on('connection', function (ws) {
+wss.on('connection', ws => {
   const currentTime = Date.now();
 
   // Unique id is assigned, set username to Anonymous and set login time
@@ -17,9 +17,9 @@ wss.on('connection', function (ws) {
   ws.send(JSON.stringify({type:'new_user', text: 'Anonymous', id: ws.id, date: currentTime}));
 
   // Also send a broadcast message so other users can get notified.
-  broadCastThis({type:'public_msg', text: 'Someone just joined!', username: null, date: currentTime});
+  broadCastThis({type:'public_msg', text: 'Someone just joined!', from: null, date: currentTime});
 
-  ws.on('message', function (message) {
+  ws.on('message', message => {
     let messageParsed = JSON.parse(message);
     console.log(messageParsed);
 
@@ -37,8 +37,12 @@ wss.on('connection', function (ws) {
       Object.assign(messageParsed, {with: {id: toClient.id, username: 'You', self: true}});
       fromClient.send(JSON.stringify(messageParsed));
     }
-    // Check the message type, if it is public msg or username is updated, broadcast it.
-    else if(messageParsed.type === 'public_msg' || messageParsed.type === 'username') {
+    // Public msg should be broadcasted.
+    else if(messageParsed.type === 'public_msg') {
+      Object.assign(messageParsed, {from: {id: ws.id, username: ws.username}});
+      broadCastThis(messageParsed);
+    }
+    else if(messageParsed.type === 'username') {
       // Update username for the client.
       ws.username = messageParsed.text;
     }
@@ -50,7 +54,7 @@ wss.on('connection', function (ws) {
 
 // Broadcast this message by sending it to all the clients.
 function broadCastThis(message) {
-  wss.clients.forEach(function each(client) {
+  wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(message));
     }
@@ -59,7 +63,7 @@ function broadCastThis(message) {
 
 function findClientById(id) {
   let clientFound;
-  wss.clients.forEach(function each(client) {
+  wss.clients.forEach(client => {
     if (client.id === id && client.readyState === WebSocket.OPEN) {
       clientFound = client;
     }
@@ -73,14 +77,14 @@ function updateOnlineUsers() {
   const message = {type: 'onlineusers', users: []};
 
   // Create a list of all users.
-  wss.clients.forEach(function each(client) {
+  wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
       message.users.push({id: client.id, text: client.username, date: client.date});
     }
   });
 
   // Send the list to all users.
-  wss.clients.forEach(function each(client) {
+  wss.clients.forEach(client => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(message));
     }
