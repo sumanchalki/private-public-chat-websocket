@@ -1,4 +1,4 @@
-This project is created using WebSocket. At the server, node.js and ws module are used.
+This project is created based on WebSocket. At the server, node.js and ws module are used.
 At the client, WebSocket web api is used (browser based). That is maintained using Vanilla JS.
 
 How to clone?
